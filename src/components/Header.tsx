@@ -144,21 +144,21 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
           </button>
 
           {/* Brand Logo */}
-          <a href="#/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-stone-900 text-amber-500 flex items-center justify-center font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+          <a href="#/" className="flex items-center gap-2 group shrink-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-stone-900 text-amber-500 flex items-center justify-center font-black text-lg sm:text-xl shadow-md group-hover:scale-105 transition-transform">
               ◨
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="font-extrabold text-xl tracking-tight text-stone-900 font-serif">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-stone-900 font-serif">
                 Mobi<span className="text-amber-700">Dolap</span>
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-stone-400">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-stone-400 hidden sm:block">
                 Dolap & Aparat Uzmanı
               </span>
             </div>
           </a>
 
-          {/* Search Bar with Live Search */}
+          {/* Search Bar with Live Search (Desktop) */}
           <div ref={searchRef} className="relative flex-1 max-w-xl mx-2 hidden sm:block">
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
@@ -216,7 +216,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
           </div>
 
           {/* Header Action Buttons */}
-          <div className="flex items-center gap-1.5 md:gap-3">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* AI Advisor Trigger */}
             <button
               onClick={() => setIsAdvisorOpen(true)}
@@ -230,12 +230,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
             {/* Compare Drawer Trigger */}
             <button
               onClick={() => setIsCompareModalOpen(true)}
-              className="relative p-2.5 text-stone-700 hover:text-amber-800 hover:bg-amber-50 rounded-xl transition-colors"
+              className="relative p-2 sm:p-2.5 text-stone-700 hover:text-amber-800 hover:bg-amber-50 rounded-xl transition-colors"
               title="Karşılaştırma Listesi"
             >
-              <ArrowLeftRight size={20} />
+              <ArrowLeftRight size={19} />
               {compareList.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-amber-600 text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-amber-600 text-white text-[10px] font-bold flex items-center justify-center">
                   {compareList.length}
                 </span>
               )}
@@ -244,12 +244,12 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
             {/* Wishlist */}
             <a
               href="#/favoriler"
-              className="relative p-2.5 text-stone-700 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+              className="relative p-2 sm:p-2.5 text-stone-700 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
               title="Favorilerim"
             >
-              <Heart size={20} />
+              <Heart size={19} />
               {wishlist.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
@@ -258,21 +258,21 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
             {/* Account */}
             <a
               href="#/hesabim"
-              className="p-2.5 text-stone-700 hover:text-stone-900 hover:bg-stone-100 rounded-xl transition-colors hidden sm:flex"
+              className="p-2 sm:p-2.5 text-stone-700 hover:text-stone-900 hover:bg-stone-100 rounded-xl transition-colors hidden sm:flex"
               title="Hesabım"
             >
-              <User size={20} />
+              <User size={19} />
             </a>
 
             {/* Cart Button */}
             <a
               href="#/sepet"
-              className="flex items-center gap-2 pl-3 pr-4 py-2 rounded-xl bg-stone-900 text-white hover:bg-amber-800 font-semibold text-xs transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-2.5 sm:pl-3 sm:pr-4 py-2 rounded-xl bg-stone-900 text-white hover:bg-amber-800 font-semibold text-xs transition-all shadow-sm"
             >
               <div className="relative">
                 <ShoppingCart size={18} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2.5 w-4 h-4 rounded-full bg-amber-500 text-stone-950 font-extrabold text-[10px] flex items-center justify-center shadow">
+                  <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-amber-500 text-stone-950 font-extrabold text-[10px] flex items-center justify-center shadow">
                     {cartCount}
                   </span>
                 )}
@@ -282,18 +282,52 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
           </div>
         </div>
 
-        {/* Mobile Search Input */}
-        <div className="px-4 pb-3 sm:hidden">
+        {/* Mobile Search Input with Live Search Dropdown */}
+        <div className="px-3 pb-3 sm:hidden relative">
           <form onSubmit={handleSearchSubmit} className="relative">
             <input
               type="text"
-              placeholder="Ürün veya kulp/ray ara..."
+              placeholder="Aksesuar, kulp veya ray ara..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-stone-100 text-xs border border-stone-200 focus:outline-none focus:border-amber-600"
+              onFocus={() => setIsSearchFocused(true)}
+              className="w-full pl-8 pr-4 py-2 rounded-xl bg-stone-100 text-xs border border-stone-200 focus:outline-none focus:border-amber-600"
             />
-            <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-stone-400" />
+            <Search className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-stone-400" />
           </form>
+
+          {isSearchFocused && filteredSuggestions.length > 0 && (
+            <div className="absolute top-full left-3 right-3 mt-1 bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden z-50 animate-in fade-in duration-200">
+              <div className="p-2 text-[10px] font-bold uppercase tracking-wider text-stone-400 px-3 pt-2">
+                Arama Sonuçları
+              </div>
+              <div className="divide-y divide-stone-100 max-h-56 overflow-y-auto">
+                {filteredSuggestions.map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#/urun/${item.id}`}
+                    onClick={() => setIsSearchFocused(false)}
+                    className="flex items-center gap-2.5 p-2.5 hover:bg-amber-50/60 transition-colors"
+                  >
+                    <div className="w-8 h-8 bg-stone-100 rounded-md overflow-hidden shrink-0 flex items-center justify-center font-bold text-[10px] text-stone-500">
+                      {item.brand}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-stone-900 truncate">
+                        {item.name}
+                      </div>
+                      <div className="text-[10px] text-stone-400">
+                        {item.brand} • {item.color}
+                      </div>
+                    </div>
+                    <div className="text-xs font-bold text-amber-900 shrink-0">
+                      {item.price.toLocaleString('tr-TR')} ₺
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

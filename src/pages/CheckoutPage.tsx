@@ -329,15 +329,19 @@ export const CheckoutPage: React.FC = () => {
             {paymentMethod === 'havale' && (
               <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 text-xs space-y-3">
                 <div className="flex items-center gap-2 font-bold text-amber-900">
-                  <Info size={16} />
+                  <Info size={16} className="shrink-0" />
                   <span>Havale / EFT Hesap Bilgilerimiz</span>
                 </div>
                 <p className="text-stone-600">
                   Siparişinizi tamamladıktan sonra tutarı aşağıdaki IBAN hesabımıza 2 saat içinde
                   gönderiniz:
                 </p>
-                <div className="p-3 bg-white rounded-xl border border-stone-200 font-mono font-bold text-stone-900">
-                  IBAN: TR90 0006 2000 0000 1234 5678 90 (MobiDolap A.Ş. - Garanti BBVA)
+                <div className="p-3.5 bg-white rounded-xl border border-stone-200 font-mono text-xs space-y-1">
+                  <div className="text-stone-500 font-sans text-[11px]">Banka: Garanti BBVA</div>
+                  <div className="text-stone-500 font-sans text-[11px]">Alıcı: MobiDolap A.Ş.</div>
+                  <div className="text-amber-800 font-bold break-all pt-1">
+                    IBAN: TR90 0006 2000 0000 1234 5678 90
+                  </div>
                 </div>
               </div>
             )}

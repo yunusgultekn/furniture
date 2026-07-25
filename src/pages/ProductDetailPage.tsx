@@ -220,92 +220,98 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
 
           {/* Quantity & Purchase Buttons */}
           <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-3">
-              {/* Quantity Selector */}
-              <div className="flex items-center border border-stone-300 rounded-xl overflow-hidden bg-stone-50">
-                <button
-                  onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="px-3.5 py-3 text-stone-600 hover:bg-stone-200 font-bold text-sm"
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  value={qty}
-                  onChange={(e) =>
-                    setQty(
-                      Math.max(
-                        1,
-                        Math.min(product.stock, parseInt(e.target.value) || 1)
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <div className="flex items-center gap-2 flex-1">
+                {/* Quantity Selector */}
+                <div className="flex items-center border border-stone-300 rounded-xl overflow-hidden bg-stone-50 h-12">
+                  <button
+                    onClick={() => setQty(Math.max(1, qty - 1))}
+                    className="px-3 text-stone-600 hover:bg-stone-200 font-bold text-sm h-full"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={qty}
+                    onChange={(e) =>
+                      setQty(
+                        Math.max(
+                          1,
+                          Math.min(product.stock, parseInt(e.target.value) || 1)
+                        )
                       )
-                    )
-                  }
-                  className="w-12 text-center text-xs font-bold bg-transparent focus:outline-none"
-                />
+                    }
+                    className="w-10 text-center text-xs font-bold bg-transparent focus:outline-none"
+                  />
+                  <button
+                    onClick={() => setQty(Math.min(product.stock, qty + 1))}
+                    className="px-3 text-stone-600 hover:bg-stone-200 font-bold text-sm h-full"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Add to Cart */}
                 <button
-                  onClick={() => setQty(Math.min(product.stock, qty + 1))}
-                  className="px-3.5 py-3 text-stone-600 hover:bg-stone-200 font-bold text-sm"
+                  onClick={() => addToCart(product, qty)}
+                  className="flex-1 h-12 px-4 sm:px-6 rounded-xl bg-stone-900 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
                 >
-                  +
+                  <ShoppingCart size={18} />
+                  <span>Sepete Ekle ({(product.price * qty).toLocaleString('tr-TR')} ₺)</span>
                 </button>
               </div>
 
-              {/* Add to Cart */}
-              <button
-                onClick={() => addToCart(product, qty)}
-                className="flex-1 py-3.5 px-6 rounded-xl bg-stone-900 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
-              >
-                <ShoppingCart size={18} />
-                <span>Sepete Ekle ({(product.price * qty).toLocaleString('tr-TR')} ₺)</span>
-              </button>
+              {/* Action Icons Bar */}
+              <div className="grid grid-cols-3 sm:flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => toggleWishlist(product.id)}
+                  className={`h-11 sm:h-12 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-colors ${
+                    isFav
+                      ? 'bg-rose-50 text-rose-600 border-rose-200 font-bold'
+                      : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                  }`}
+                  title="Favorilere Ekle"
+                >
+                  <Heart size={18} className={isFav ? 'fill-current' : ''} />
+                  <span className="text-[11px] font-semibold sm:hidden">Favori</span>
+                </button>
 
-              {/* Wishlist Toggle */}
-              <button
-                onClick={() => toggleWishlist(product.id)}
-                className={`p-3.5 rounded-xl border transition-colors ${
-                  isFav
-                    ? 'bg-rose-50 text-rose-600 border-rose-200'
-                    : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
-                }`}
-                title="Favorilere Ekle"
-              >
-                <Heart size={20} className={isFav ? 'fill-current' : ''} />
-              </button>
+                <button
+                  onClick={() => toggleCompare(product.id)}
+                  className={`h-11 sm:h-12 px-3 rounded-xl border flex items-center justify-center gap-1.5 transition-colors ${
+                    isCompared
+                      ? 'bg-amber-50 text-amber-700 border-amber-300 font-bold'
+                      : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                  }`}
+                  title="Karşılaştır"
+                >
+                  <ArrowLeftRight size={18} />
+                  <span className="text-[11px] font-semibold sm:hidden">Kıyasla</span>
+                </button>
 
-              {/* Compare Toggle */}
-              <button
-                onClick={() => toggleCompare(product.id)}
-                className={`p-3.5 rounded-xl border transition-colors ${
-                  isCompared
-                    ? 'bg-amber-50 text-amber-700 border-amber-300'
-                    : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
-                }`}
-                title="Karşılaştır"
-              >
-                <ArrowLeftRight size={20} />
-              </button>
-
-              <button
-                onClick={handleShare}
-                className="p-3.5 rounded-xl border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
-                title="Paylaş"
-              >
-                <Share2 size={20} />
-              </button>
+                <button
+                  onClick={handleShare}
+                  className="h-11 sm:h-12 px-3 rounded-xl border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 flex items-center justify-center gap-1.5 transition-colors"
+                  title="Paylaş"
+                >
+                  <Share2 size={18} />
+                  <span className="text-[11px] font-semibold sm:hidden">Paylaş</span>
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Perks Bar */}
-          <div className="pt-4 border-t border-stone-200 grid grid-cols-3 gap-2 text-[11px] text-stone-600 font-medium">
-            <div className="flex items-center gap-2">
+          <div className="pt-4 border-t border-stone-200 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px] text-stone-600 font-medium">
+            <div className="flex items-center gap-2 bg-stone-50 sm:bg-transparent p-2 sm:p-0 rounded-xl">
               <Truck size={16} className="text-amber-700 shrink-0" />
               <span>1 İş Gününde Kargo</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-stone-50 sm:bg-transparent p-2 sm:p-0 rounded-xl">
               <ShieldCheck size={16} className="text-amber-700 shrink-0" />
               <span>%100 Orijinal Ürün</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-stone-50 sm:bg-transparent p-2 sm:p-0 rounded-xl">
               <RotateCcw size={16} className="text-amber-700 shrink-0" />
               <span>14 Gün Kolay İade</span>
             </div>

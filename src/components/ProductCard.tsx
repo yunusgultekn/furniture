@@ -101,7 +101,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               e.stopPropagation();
               setQuickViewProduct(product);
             }}
-            className="w-9 h-9 rounded-full bg-white/90 text-stone-600 hover:text-stone-900 hover:bg-white border border-stone-200 flex items-center justify-center shadow-sm backdrop-blur-md transition-all opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0"
+            className="w-9 h-9 rounded-full bg-white/90 text-stone-600 hover:text-stone-900 hover:bg-white border border-stone-200 flex items-center justify-center shadow-sm backdrop-blur-md transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transform translate-x-0 sm:translate-x-2 sm:group-hover:translate-x-0"
             title="Hızlı Bakış"
           >
             <Eye size={17} />
@@ -113,13 +113,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Body Content */}
-      <div className="p-4 flex flex-col flex-1 gap-2">
-        <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-semibold text-stone-400">
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2">
+        <div className="flex items-center justify-between text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold text-stone-400">
           <span>{categoryName}</span>
           <span className="text-stone-500 font-bold">{product.brand}</span>
         </div>
 
-        <h3 className="font-semibold text-stone-900 text-sm leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-amber-800 transition-colors">
+        <h3 className="font-semibold text-stone-900 text-xs sm:text-sm leading-snug line-clamp-2 min-h-[2.25rem] sm:min-h-[2.5rem] group-hover:text-amber-800 transition-colors">
           <a href={`#/urun/${product.id}`} onClick={handleClick}>
             {product.name}
           </a>
@@ -128,30 +128,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Ratings & Specs */}
         <div className="flex items-center justify-between my-0.5">
           <StarRating rating={product.rating} reviewsCount={product.reviews} />
-          <span className="text-[11px] text-stone-500 bg-stone-100 px-2 py-0.5 rounded font-medium">
+          <span className="text-[10px] text-stone-500 bg-stone-100 px-1.5 py-0.5 rounded font-medium truncate max-w-[80px]">
             {product.color}
           </span>
         </div>
 
         {/* Footer: Price & Add to Cart */}
-        <div className="mt-auto pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
-          <div className="flex flex-col">
+        <div className="mt-auto pt-2.5 border-t border-stone-100 flex items-center justify-between gap-2">
+          <div className="flex flex-col min-w-0">
             {product.oldPrice && (
-              <span className="text-xs text-stone-400 line-through">
+              <span className="text-[11px] text-stone-400 line-through">
                 {product.oldPrice.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ₺
               </span>
             )}
-            <span className="text-base font-extrabold text-stone-900 tracking-tight">
+            <span className="text-sm sm:text-base font-extrabold text-stone-900 tracking-tight truncate">
               {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ₺
             </span>
           </div>
 
           <button
             onClick={() => addToCart(product, 1)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-stone-900 hover:bg-amber-700 text-white text-xs font-semibold transition-all duration-200 active:scale-95 shadow-sm"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-stone-900 hover:bg-amber-700 text-white text-xs font-semibold transition-all duration-200 active:scale-95 shadow-sm shrink-0"
           >
             <ShoppingCart size={15} />
-            <span className="hidden sm:inline">Ekle</span>
+            <span>Ekle</span>
           </button>
         </div>
       </div>

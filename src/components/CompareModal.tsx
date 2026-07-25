@@ -55,9 +55,9 @@ export const CompareModal: React.FC = () => {
         </div>
 
         {/* Content Table */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-4 sm:p-6">
           {compareProducts.length === 0 ? (
-            <div className="py-16 text-center space-y-3">
+            <div className="py-12 sm:py-16 text-center space-y-3">
               <ArrowLeftRight size={40} className="mx-auto text-stone-300" />
               <h3 className="font-bold text-stone-800 text-base">Karşılaştırma listeniz boş</h3>
               <p className="text-xs text-stone-500 max-w-sm mx-auto">
@@ -66,33 +66,33 @@ export const CompareModal: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+            <div className="overflow-x-auto pb-4">
+              <table className="w-full text-left border-collapse text-xs min-w-[500px]">
                 <thead>
                   <tr>
-                    <th className="p-3 bg-stone-100 text-stone-500 font-bold w-40 rounded-l-xl">
+                    <th className="p-3 bg-stone-100 text-stone-500 font-bold w-28 sm:w-40 rounded-l-xl shrink-0 sticky left-0 z-10 shadow-sm">
                       Özellik
                     </th>
                     {compareProducts.map((p) => (
-                      <th key={p!.id} className="p-3 min-w-[200px] border-l border-stone-200">
+                      <th key={p!.id} className="p-3 min-w-[170px] sm:min-w-[200px] border-l border-stone-200">
                         <div className="relative group">
                           <button
                             onClick={() => toggleCompare(p!.id)}
-                            className="absolute -top-1 -right-1 p-1 text-stone-400 hover:text-rose-600"
+                            className="absolute -top-1 -right-1 p-1 text-stone-400 hover:text-rose-600 z-10"
                             title="Kaldır"
                           >
-                            <X size={14} />
+                            <X size={16} />
                           </button>
-                          <div className="w-full h-28 bg-stone-100 rounded-xl overflow-hidden mb-2">
+                          <div className="w-full h-24 sm:h-28 bg-stone-100 rounded-xl overflow-hidden mb-2">
                             <ProductImage product={p!} className="w-full h-full object-cover" />
                           </div>
-                          <div className="font-bold text-stone-900 line-clamp-2">{p!.name}</div>
-                          <div className="text-amber-800 font-extrabold text-sm mt-1">
+                          <div className="font-bold text-stone-900 line-clamp-2 text-xs">{p!.name}</div>
+                          <div className="text-amber-800 font-extrabold text-xs sm:text-sm mt-1">
                             {p!.price.toLocaleString('tr-TR')} ₺
                           </div>
                           <button
                             onClick={() => addToCart(p!, 1)}
-                            className="w-full mt-2 py-1.5 bg-stone-900 hover:bg-amber-700 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-1"
+                            className="w-full mt-2 py-1.5 bg-stone-900 hover:bg-amber-700 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-1 text-[11px]"
                           >
                             <ShoppingCart size={12} /> Sepete Ekle
                           </button>
@@ -103,7 +103,7 @@ export const CompareModal: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-stone-100">
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Marka</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Marka</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100 font-semibold">
                         {p!.brand}
@@ -111,7 +111,7 @@ export const CompareModal: React.FC = () => {
                     ))}
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Kategori</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Kategori</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100 uppercase text-[10px]">
                         {p!.cat}
@@ -119,7 +119,7 @@ export const CompareModal: React.FC = () => {
                     ))}
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Değerlendirme</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Puan</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100">
                         <StarRating rating={p!.rating} reviewsCount={p!.reviews} />
@@ -127,7 +127,7 @@ export const CompareModal: React.FC = () => {
                     ))}
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Renk / Kaplama</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Renk / Kaplama</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100">
                         {p!.color}
@@ -135,18 +135,18 @@ export const CompareModal: React.FC = () => {
                     ))}
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Stok Durumu</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Stok</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100 text-emerald-700 font-bold">
-                        {p!.stock} Adet Stokta
+                        {p!.stock} Adet
                       </td>
                     ))}
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-stone-600 bg-stone-50">Garanti Süresi</td>
+                    <td className="p-3 font-bold text-stone-600 bg-stone-50 sticky left-0 z-10 shadow-sm">Garanti</td>
                     {compareProducts.map((p) => (
                       <td key={p!.id} className="p-3 border-l border-stone-100">
-                        {p!.warrantyYears || 2} Yıl Garanti
+                        {p!.warrantyYears || 2} Yıl
                       </td>
                     ))}
                   </tr>
