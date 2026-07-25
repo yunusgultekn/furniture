@@ -1,0 +1,6 @@
+{
+  "name": "MobiDolap — E-Ticaret",
+  "description": "Dolap, çekmece ve mobilya aksesuarları için modern, responsive ve gelişmiş e-ticaret uygulaması.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
