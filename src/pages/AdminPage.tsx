@@ -197,26 +197,17 @@ export const AdminPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* Header Banner */}
-      <div className="p-6 rounded-3xl bg-stone-900 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-stone-800">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500 text-stone-950">
-              Yönetici Paneli v2.5
-            </span>
-            <span className="text-stone-400 text-xs">MobiDolap Admin Engine</span>
-          </div>
-          <h1 className="text-2xl font-black font-serif tracking-tight">
-            Mağaza ve Stok Yönetim Merkezi
+      <div className="p-5 rounded-3xl bg-stone-900 text-white shadow-xl flex items-center justify-between gap-4 border border-stone-800">
+        <div>
+          <h1 className="text-xl font-bold font-serif tracking-tight">
+            Yönetim Paneli
           </h1>
-          <p className="text-stone-400 text-xs max-w-2xl">
-            Tüm ürünlerinizi, stok hareketlerini, müşteri siparişlerini ve site içeriklerini tek ekrandan yönetin.
-          </p>
         </div>
 
         <div className="flex items-center gap-3">
           <a
             href="#/"
-            className="px-4 py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors flex items-center gap-2 border border-stone-700"
+            className="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors flex items-center gap-2 border border-stone-700"
           >
             <Eye size={15} /> Mağazayı İncele
           </a>
@@ -995,10 +986,6 @@ export const AdminPage: React.FC = () => {
       {/* TAB 8: YETKİ VE ROL YÖNETİMİ */}
       {activeTab === 'roles' && (
         <div className="space-y-6">
-          <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 font-medium">
-            Personel hesaplarına atanabilecek erişim yetkilerini buradan özelleştirebilirsiniz.
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {staffRoles.map((role) => (
               <div
