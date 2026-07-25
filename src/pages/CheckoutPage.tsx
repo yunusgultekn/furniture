@@ -34,6 +34,10 @@ export const CheckoutPage: React.FC = () => {
   const [cardExp, setCardExp] = useState('12/28');
   const [cardCvv, setCardCvv] = useState('888');
 
+  // Terms and modal state
+  const [termsAccepted, setTermsAccepted] = useState(true);
+  const [isContractModalOpen, setIsContractModalOpen] = useState(false);
+
   if (cart.length === 0) {
     window.location.hash = '#/sepet';
     return null;
@@ -347,9 +351,33 @@ export const CheckoutPage: React.FC = () => {
             )}
           </div>
 
+          {/* KVKK & Distance Sales Agreement Checkbox */}
+          <div className="p-4 rounded-2xl bg-white border border-stone-200 text-xs space-y-2">
+            <label className="flex items-start gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                required
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="mt-0.5 rounded border-stone-300 text-amber-700 focus:ring-amber-500 shrink-0"
+              />
+              <span className="text-stone-600 leading-snug">
+                <button
+                  type="button"
+                  onClick={() => setIsContractModalOpen(true)}
+                  className="font-bold text-amber-900 underline hover:text-amber-700 inline"
+                >
+                  Mesafeli Satış Sözleşmesi
+                </button>
+                'ni ve KVKK Aydınlatma Metni'ni okudum, kabul ediyorum.
+              </span>
+            </label>
+          </div>
+
           <button
             type="submit"
-            className="w-full py-4 bg-stone-900 hover:bg-amber-700 text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xl transition-all"
+            disabled={!termsAccepted}
+            className="w-full py-4 bg-stone-900 hover:bg-amber-700 disabled:opacity-50 disabled:hover:bg-stone-900 text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xl transition-all"
           >
             <span>Siparişi Onayla & Tamamla ({grandTotal.toLocaleString('tr-TR')} ₺)</span>
             <ArrowRight size={18} />
@@ -404,6 +432,57 @@ export const CheckoutPage: React.FC = () => {
           </div>
         </div>
       </form>
+
+      {/* Mesafeli Satış Sözleşmesi Modal */}
+      {isContractModalOpen && (
+        <div className="fixed inset-0 z-50 bg-stone-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border border-stone-200">
+            <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+              <h3 className="font-bold text-stone-900 text-base font-serif">
+                Mesafeli Satış Sözleşmesi & Ön Bilgilendirme Formu
+              </h3>
+              <button
+                onClick={() => setIsContractModalOpen(false)}
+                className="p-1 rounded-lg text-stone-400 hover:text-stone-900"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="max-h-80 overflow-y-auto space-y-3 text-xs text-stone-600 leading-relaxed pr-2">
+              <p>
+                <strong>MADDE 1 - TARAFLAR:</strong> İşbu sözleşme, MobiDolap A.Ş. (Satıcı) ile
+                siparişi gerçekleştiren Alıcı arasında aşağıda belirtilen hükümler çerçevesinde
+                elektronik ortamda akdedilmiştir.
+              </p>
+              <p>
+                <strong>MADDE 2 - KONU:</strong> İşbu sözleşmenin konusu, Alıcı’nın Satıcı’ya ait
+                web sitesinden elektronik ortamda siparişini yaptığı mobilya aksesuarı ürünlerinin
+                satışı ve teslimi ile ilgili olarak Tüketicinin Korunması Hakkında Kanun ve Mesafeli
+                Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerinin
+                belirlenmesidir.
+              </p>
+              <p>
+                <strong>MADDE 3 - CAYMA HAKKI:</strong> Alıcı, hiçbir hukuki ve cezai sorumluluk
+                üstlenmeksizin ve hiçbir gerekçe göstermeksizin teslimat tarihinden itibaren 14 gün
+                içinde cayma hakkını kullanabilir.
+              </p>
+            </div>
+
+            <div className="flex justify-end pt-2 border-t border-stone-100">
+              <button
+                onClick={() => {
+                  setTermsAccepted(true);
+                  setIsContractModalOpen(false);
+                }}
+                className="px-6 py-2.5 bg-stone-900 hover:bg-amber-700 text-white font-bold text-xs rounded-xl"
+              >
+                Okudum, Anladım & Onaylıyorum
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

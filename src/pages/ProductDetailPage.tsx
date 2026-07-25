@@ -41,6 +41,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<'desc' | 'specs' | 'guide' | 'reviews'>('desc');
   const [selectedThumbIndex, setSelectedThumbIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  // Bundle product for "Frequently Bought Together"
+  const complementaryProduct = products.find(
+    (p) => p.cat === product.cat && p.id !== product.id
+  ) || products.find((p) => p.id !== product.id);
 
   // Review submission state
   const [reviewsList, setReviewsList] = useState(
@@ -125,13 +131,21 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* Left Column: Image Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-[4/3] bg-stone-100 rounded-3xl overflow-hidden border border-stone-200 shadow-sm">
+          <div 
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-[4/3] bg-stone-100 rounded-3xl overflow-hidden border border-stone-200 shadow-sm cursor-zoom-in group"
+          >
             {product.badge && (
               <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full text-xs font-bold text-white bg-amber-700 shadow">
                 {product.badge}
               </span>
             )}
-            <ProductImage product={product} className="w-full h-full object-cover" />
+            <ProductImage product={product} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="px-3 py-1.5 rounded-full bg-white/90 text-stone-900 font-bold text-xs shadow-md backdrop-blur-sm">
+                Büyütmek İçin Tıklayın
+              </span>
+            </div>
           </div>
 
           {/* Thumbnail Selectors */}
@@ -318,6 +332,73 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
           </div>
         </div>
       </div>
+
+      {/* Frequently Bought Together Bundle Deal */}
+      {complementaryProduct && (
+        <div className="p-6 rounded-3xl bg-amber-50/70 border border-amber-200/90 shadow-sm space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-700 text-white">
+              Paket Fırsatı
+            </span>
+            <h3 className="font-bold text-stone-900 text-sm sm:text-base font-serif">
+              Birlikte Sık Alınan Tamamlayıcı Ürün
+            </h3>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              {/* Product 1 */}
+              <div className="flex items-center gap-2 bg-white p-2.5 rounded-2xl border border-stone-200 shrink-0">
+                <div className="w-12 h-12 bg-stone-100 rounded-xl overflow-hidden shrink-0">
+                  <ProductImage product={product} className="w-full h-full object-cover" />
+                </div>
+                <div className="text-xs">
+                  <div className="font-bold text-stone-900 line-clamp-1">{product.name}</div>
+                  <div className="text-amber-800 font-bold">{product.price.toLocaleString('tr-TR')} ₺</div>
+                </div>
+              </div>
+
+              <span className="font-extrabold text-stone-400 text-lg">+</span>
+
+              {/* Product 2 */}
+              <div className="flex items-center gap-2 bg-white p-2.5 rounded-2xl border border-stone-200 shrink-0">
+                <div className="w-12 h-12 bg-stone-100 rounded-xl overflow-hidden shrink-0">
+                  <ProductImage product={complementaryProduct} className="w-full h-full object-cover" />
+                </div>
+                <div className="text-xs">
+                  <div className="font-bold text-stone-900 line-clamp-1">{complementaryProduct.name}</div>
+                  <div className="text-amber-800 font-bold">{complementaryProduct.price.toLocaleString('tr-TR')} ₺</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bundle Buy Action */}
+            <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-0 border-amber-200">
+              <div className="text-left sm:text-right">
+                <div className="text-[10px] text-stone-500 line-through">
+                  {(product.price + complementaryProduct.price).toLocaleString('tr-TR')} ₺
+                </div>
+                <div className="text-base font-extrabold text-amber-900">
+                  {((product.price + complementaryProduct.price) * 0.9).toLocaleString('tr-TR', { minimumFractionDigits: 2 })} ₺
+                </div>
+                <div className="text-[10px] font-bold text-emerald-700">%10 Paket İndirimi</div>
+              </div>
+
+              <button
+                onClick={() => {
+                  addToCart(product, 1);
+                  addToCart(complementaryProduct, 1);
+                  showToast('Paket ürünlerinin ikisi de sepete eklendi!', 'success');
+                }}
+                className="px-5 py-3 bg-stone-900 hover:bg-amber-800 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-md transition-all shrink-0"
+              >
+                <ShoppingCart size={16} />
+                <span>2'sini Birlikte Ekle</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tabs Section */}
       <div className="bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm">
@@ -543,6 +624,27 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ productId 
             ))}
           </div>
         </section>
+      )}
+
+      {/* Lightbox Image Preview Modal */}
+      {isLightboxOpen && (
+        <div 
+          onClick={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 z-50 bg-stone-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200 cursor-zoom-out"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            className="relative max-w-4xl max-h-[85vh] w-full bg-white rounded-3xl p-3 overflow-hidden shadow-2xl flex items-center justify-center border border-stone-200"
+          >
+            <button
+              onClick={() => setIsLightboxOpen(false)}
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-stone-900 hover:bg-amber-700 text-white font-bold flex items-center justify-center shadow-lg transition-colors"
+            >
+              ✕
+            </button>
+            <ProductImage product={product} className="max-h-[80vh] w-auto object-contain rounded-2xl" />
+          </div>
+        </div>
       )}
     </div>
   );

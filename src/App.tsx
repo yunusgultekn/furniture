@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StoreProvider } from './context/StoreContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { BottomNav } from './components/BottomNav';
 import { Toast } from './components/Toast';
 import { QuickViewModal } from './components/QuickViewModal';
 import { CabinetAdvisorModal } from './components/CabinetAdvisorModal';
@@ -80,8 +81,9 @@ function MainApp() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f5f0] text-stone-900 font-sans selection:bg-amber-100 selection:text-amber-900">
       <Header currentPath={currentHash} />
-      <main className="flex-1">{renderContent()}</main>
+      <main className="flex-1 pb-16 md:pb-0">{renderContent()}</main>
       <Footer />
+      <BottomNav currentPath={currentHash} />
 
       {/* Global Floating Modals & Notifications */}
       <QuickViewModal />
