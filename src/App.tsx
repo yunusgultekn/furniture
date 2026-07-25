@@ -17,6 +17,8 @@ import { OrderSuccessPage } from './pages/OrderSuccessPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { AccountPage } from './pages/AccountPage';
 import { StaticPage } from './pages/StaticPage';
+import { AdminPage } from './pages/AdminPage';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { CategorySlug } from './types';
 
 function MainApp() {
@@ -73,6 +75,9 @@ function MainApp() {
       case 'sayfa':
         return <StaticPage slug={argument || 'hakkimizda'} />;
 
+      case 'admin':
+        return <AdminPage />;
+
       default:
         return <HomePage />;
     }
@@ -85,7 +90,8 @@ function MainApp() {
       <Footer />
       <BottomNav currentPath={currentHash} />
 
-      {/* Global Floating Modals & Notifications */}
+      {/* Global Floating Modals & Support */}
+      <WhatsAppButton />
       <QuickViewModal />
       <CabinetAdvisorModal />
       <CompareModal />

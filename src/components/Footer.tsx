@@ -178,6 +178,11 @@ export const Footer: React.FC = () => {
                 Favori Listem
               </a>
             </li>
+            <li>
+              <a href="#/admin" className="text-amber-400 font-bold hover:underline transition-colors flex items-center gap-1">
+                🛡️ Admin Yönetim Paneli
+              </a>
+            </li>
           </ul>
         </div>
 

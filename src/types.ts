@@ -67,6 +67,48 @@ export interface Coupon {
   value: number;
   label: string;
   minSpend?: number;
+  active?: boolean;
+}
+
+export interface UserAccount {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  role: 'Müşteri' | 'Admin' | 'Editör' | 'Stok Yöneticisi';
+  totalOrders: number;
+  totalSpent: number;
+  registeredDate: string;
+  isBlocked: boolean;
+}
+
+export interface CmsSettings {
+  heroTitle: string;
+  heroSubtitle: string;
+  announcementText: string;
+  isAnnouncementActive: boolean;
+  freeShippingLimit: number;
+  supportPhone: string;
+  whatsappPhone: string;
+  bannerNotice: string;
+}
+
+export interface StaffPermission {
+  canManageProducts: boolean;
+  canManageStock: boolean;
+  canManageOrders: boolean;
+  canManageUsers: boolean;
+  canManageCoupons: boolean;
+  canManageCMS: boolean;
+  canViewReports: boolean;
+}
+
+export interface StaffRole {
+  id: string;
+  name: string;
+  description: string;
+  permissions: StaffPermission;
 }
 
 export interface CustomerInfo {

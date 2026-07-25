@@ -264,6 +264,16 @@ export const Header: React.FC<HeaderProps> = ({ currentPath }) => {
               <User size={19} />
             </a>
 
+            {/* Admin Panel Quick Access */}
+            <a
+              href="#/admin"
+              className="px-2.5 py-1.5 bg-stone-900 hover:bg-stone-800 text-amber-400 border border-amber-500/30 rounded-xl transition-all hidden xl:flex items-center gap-1.5 font-bold text-[11px] shadow-sm"
+              title="Admin Paneli"
+            >
+              <ShieldCheck size={14} className="text-amber-400" />
+              <span>Admin</span>
+            </a>
+
             {/* Cart Button */}
             <a
               href="#/sepet"
